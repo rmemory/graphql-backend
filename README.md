@@ -127,4 +127,26 @@ Its kind of like "php artisan migrate" for Laravel.
 
 Via the post-deploy hook defined in prisma.yml, the actual schema for the application is then found in backend/prisma/datamodel.graphql
 
+# GraphQL Yoga
+
+GraphQL Yoga Server is a Node/Express server, and provides a CRUD API. Like Node, it has middleware, etc.
+
+On the frontend, the React components talk to Apollo, which then in turn communicate to the backend starting with GraphQL Yoga, which in turn talks to the database via Prisma GraphQL.
+
+Note that in embedded environments, other clients (different than Apollo) could communicate to GraphQL Yoga or Prisma.
+
+Without GraphQL Yoga, there is no authentication, and no way to add our own logic such as charging credit cards, sending email, hashing passwords, permissions, etc.
+
+Connections to the database from GraphQL Yoga to Prisma GraphQL, occur in backend/src/db.js.
+
+For an example of the interface between GraphQL Yoga and Prisma GraphQL, see this:
+
+https://github.com/prisma/prisma-binding
+
+The GraphQL Yoga server itself is created in backend/src/createServer.js. Client side queries and mutations are defined in src/schema.graphql. In other words, the GraphQL Yoga server will match up whatever is defined in the schema.graphql with the resolvers (mutation or query).
+
+The GraphQL Yoga server is started in src/index.js.
+
+The backend/datamodel.graphql and backend/generated/prisma.graphql are for the Prisma GraphQL layer. While backend/src/schema.graphql is for the GraphQL Yoga layer. Meaning that whatever is defined in backend/src/schema.graphql limits what kinds of things (resolvers) you can use to access the Prisma GraphQL backend.
+ 
 
