@@ -19,7 +19,7 @@ function createServer() {
 			Mutation: Mutation,
 			Query: Query,
 		},
-		resolverValidaitonOptions: {
+		resolverValidationOptions: {
 			requireResolversForResolveType: false,
 		},
 

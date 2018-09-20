@@ -207,3 +207,10 @@ module.exports = Mutations;
 
 Again, in the above example, nothing is getting stored in the DB. It just shows how the backend API works with resolvers. The schema.graphql defines the types and APIs, and the resolvers are the implementation of that schema. 
 
+Anytime any change is made to the datamodel.graphql, you must run an npm run deploy to update the database.
+
+There are three different graphql files in the backend.
+
+* datamodel.graphql is our definition of the database schema
+* primsa.graphql is prisma generated version of our schema
+* schema.graphql is the api for Yoga GraphQL (publicaly facing API)
