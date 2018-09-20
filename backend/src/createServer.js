@@ -22,6 +22,9 @@ function createServer() {
 		resolverValidaitonOptions: {
 			requireResolversForResolveType: false,
 		},
+
+		// cookies, other request information from the request
+		// will be made available to each resolver
 		context: req => ({ ...req, db }),
 	});
 }

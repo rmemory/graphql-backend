@@ -149,4 +149,61 @@ The GraphQL Yoga server is started in src/index.js.
 
 The backend/datamodel.graphql and backend/generated/prisma.graphql are for the Prisma GraphQL layer. While backend/src/schema.graphql is for the GraphQL Yoga layer. Meaning that whatever is defined in backend/src/schema.graphql limits what kinds of things (resolvers) you can use to access the Prisma GraphQL backend.
  
+The resolvers (Mutation.js and Query.js) decide how the data specified in the backend/src/schema.graphql is accessed from Prisma GraphQL.
+
+Resolvers (which of course run on the Yoga GraphQL Node Express server in the backend) are used to access things like external REST endpoints (such as on a entirely different backend elsewhere), possibly a file on the server's file system, or most often, the resolver accesses the DB by using Prisma GraphQL. 
+
+Here is a simple example, which doesn't access Prisma. It just sets the data in global memory space on the server.
+
+The schema.graphql, looks like this:
+
+type Dog {
+	name: String!
+}
+
+type Mutation {
+	createDog(name: String!): Dog
+}
+
+type Query {
+	dogs: [Dog]!
+}
+
+This implies inside of the GraphQL playground launched on http://localhost:4444/ by running npm run dev, you will be able to create queries/mutations like this:
+
+query getAllDogs {
+  dogs {
+    name
+  }
+}
+
+mutation createADog{
+  createDog(name: "Anna"){
+    name
+  }
+}
+
+But in the Query and Mutation files, you need these respectively:
+
+const Query = {
+	dogs(parent, args, ctx, info) {
+		global.dogs = global.dogs || [];
+		return global.dogs;
+	},
+};
+
+module.exports = Query;
+
+const Mutations = {
+	createDog(parent, args, ctx, info) {
+		global.dogs = global.dogs || [];
+		const newDog = { name: args.name};
+		global.dogs.push(newDog);
+		return newDog;
+	},
+};
+
+module.exports = Mutations;
+
+Again, in the above example, nothing is getting stored in the DB. It just shows how the backend API works with resolvers. The schema.graphql defines the types and APIs, and the resolvers are the implementation of that schema. 
 
