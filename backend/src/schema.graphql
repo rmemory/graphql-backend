@@ -4,11 +4,45 @@ type Dog {
 	name: String!
 }
 
+input YogaItemCreateInput {
+  title: String!
+  description: String!
+  image: String
+  largeImage: String
+  price: Int!
+}
+
 type Mutation {
 	createDog(name: String!): Dog
-	createItem(title: String, description: String, Price: Int, image: String, largeImage: String): Item!
+
+	# Connection to Prisma.
+	createItem(data: YogaItemCreateInput!): Item!
 }
 
 type Query {
 	dogs: [Dog]!
+	items: [Item]!
 }
+
+# Here is any example: 
+
+	# mutation createADog{
+	# 	createDog(name: "Anna"){
+	# 	name
+	# }
+	# createItem(data: {
+	# 	title: "goober",
+	# 	description: "A description",
+	# 	image: "a string",
+	# 	largeImage: "goober.jpg",
+	# 	price: 5500,
+	# }) {
+	# 	description
+	# }
+
+	# query getAllItems{
+	# 	items {
+	# 		description
+	# 		image
+	# 	}
+	# }
