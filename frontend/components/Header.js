@@ -25,29 +25,31 @@ Router.onRouteChangeError = () => {
 const StyledHeader = styled.header`
 	.bar {
 		border-bottom: 10px solid ${props => props.theme.black};
+
+		// auto vs fr: https://codepen.io/cssgrid/pen/ALQjAj
 		display: grid;
-		grid-template-columns: auto 1fr;
-		justify-content: space-between;
-		align-items: stretch;
+		grid-template-columns: auto 1fr; // 2 columns, first one is as wide as its content, second one takes up remaining space
+		justify-content: space-between; // Used when contents of grid are less than the size of the grid container
+		align-items: stretch; // Stretch across columns from top to bottom of container
 		@media (max-width: 1300px) {
-			grid-template-columns: 1fr;
-			justify-content: center;
+			grid-template-columns: 1fr; // 1 column
+			justify-content: center; // center that one column
 		}
 	}
 	.sub-bar {
 		display: grid;
-		grid-template-columns: 1fr auto;
+		grid-template-columns: 1fr auto; // 2 columns, first takes up whatever is left from second column which is as wide as its content
 		border-bottom: 1px solid ${props => props.theme.lightgrey};
 	}
 `;
 
 // Logo style
-const Logo = styled.h1`
+const LogoH1 = styled.h1`
 	font-size: 4rem;
 	margin-left: 2rem;
 	position: relative;
 	z-index: 2;
-	transform: skew(-7deg); // a fancy way to italize the logo
+	transform: skew(-7deg); // a fancy way to italize the logo text
 	a {
 		padding: 0.5rem 1rem;
 		background: ${props => props.theme.red};
@@ -64,11 +66,11 @@ const Logo = styled.h1`
 const Header = () => (
 	<StyledHeader>
 		<div className="bar">
-			<Logo>
+			<LogoH1>
 				<Link href="/">
 					<a>Insert logo name here</a>
 				</Link>
-			</Logo>
+			</LogoH1>
 			<Nav />
 		</div>
 		<div className="sub-bar">

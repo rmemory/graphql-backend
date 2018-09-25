@@ -18,11 +18,14 @@ const NavStyles = styled.ul`
 		background: none;
 		border: 0;
 		cursor: pointer;
+		
 		@media (max-width: 700px) {
 			font-size: 10px;
 			padding: 0 10px;
 		}
-		&:before { //Slant separator before each item
+
+		// Slant separator before each item
+		&:before { 
 			content: '';
 			width: 2px;
 			background: ${props => props.theme.lightgrey};
@@ -33,7 +36,9 @@ const NavStyles = styled.ul`
 			top: 0;
 			bottom: 0;
 		}
-		&:after { // Hover bar under item
+
+		// Hover bar under item
+		&:after { 
 			content: '';
 			height: 2px;
 			background: red; // Might want to theme this

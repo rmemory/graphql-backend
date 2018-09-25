@@ -26,6 +26,9 @@ export default class MyDocument extends Document {
 	// is sent to the client
 	static getInitialProps ({ renderPage }) {
 		const sheet = new ServerStyleSheet()
+
+		// This crawls all of the components on the server, to collect all styles before
+		// the page is sent to the client
 		const page = renderPage(App => props => sheet.collectStyles(<App {...props} />))
 		const styleTags = sheet.getStyleElement()
 		return { ...page, styleTags }

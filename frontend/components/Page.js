@@ -18,23 +18,22 @@ const theme = {
 	lightgrey: '#E1E1E1',
 	offWhite: '#EDEDED',
 	maxWidth: '1000px', // Inner part of body
-	// No horizontal offset, vertical offset, blur size, spread, color
+	// box-shadow: No horizontal offset, vertical offset, blur size, spread, color
 	bs: '0 12px 24px 0 rgba(0,0,0,0.09)',
  }
 
-/* Global styling, which doesn't have access to the theme. 
+/* Top level global styling, which doesn't have access to the theme. 
    Fonts and global styles are inserted here. */
 injectGlobal`
 	@font-face {
 		font-family: 'radnika_next';
-		src: url('/static/radnikanext-medium-webfont.woff2');
-		format('woff2');
+		src: url('/static/radnikanext-medium-webfont.woff2') format ('woff2');
 		font-weight: normal;
 		font-style: normal;
 	}
 
-	/* border-box means child elements width and height are calculated relative
-	   to their parent and not the screen. The following URL provides a good
+	/* Using border-box here means child elements width and height are calculated 
+	   relative to their parent and not the screen. The following URL provides a good
 	   explanation: 
 
 	   https://css-tricks.com/box-sizing/
@@ -75,7 +74,7 @@ const StyledPage = styled.div`
 // Individual pages will be rendered inside this div
 const Inner = styled.div`
 	max-width: ${props => props.theme.maxWidth};
-	margin: 0 auto; // Center horizontally according to max width
+	margin: 0 auto; // Center content horizontally according to max width
 	padding: 2rem; //2x base font size
 `;
 

@@ -4,15 +4,52 @@ This is a boilerplate full stack starter point for React applications, which use
 
 The routes are defined in the frontend/pages directory. Note that server side rendering is used. Each page file defines a route, and each route decides which components are pushed to the client. 
 
-The top level React state for the application is defined in frontend/pages/_app.js.
+The top level React state for the application is defined in frontend/pages/_app.js. Note that next.js generates pages on demand in development mode, which means when using development mode, there is a bit of delay when switching pages. And we can also pre-fetch the data needed before its displayed as well.
 
-The overall color theme for the application is defined in a theme object in frontend/components/Page.js.
+See the frontend/components/Header.js for usage of the nProgress bar, though it could be anywhere.
 
-Global CSS is imported in the head section, see frontend/components/Header.js. However, the application specific, top level CSS starts in the injectGlobal section found in frontend/components/Page.js. All other styling is performed on a component by component basis using styled components.
+The overall color theme for the application is defined in a theme object in frontend/components/Page.js, and a ThemeProvider is used (via React Context) to be available througout the application on any component which is a descendent of Page.
 
-Note that the styled component css is also gathered on the server as pages are pushed. See frontend/pages/_document.js. This prevents flicker, because without the component css is pushed async after the component.
+Global CSS is imported in the head section: see frontend/components/Header.js. However, the application specific, top level CSS starts in the injectGlobal section found in frontend/components/Page.js (which itself specifies global styles). All other styling is performed on a component by component basis using styled components.
 
-Progress for route changes are shown using an nprogress bar. See frontend/components/Header.js which includes the Nav.js.
+```
+import styled, { ThemeProvider, injectGlobal } from 'styled-components';
+
+const MyButton = styled.button`
+	background: red;
+	font-size: 100px;
+	span {
+		font-size: 100px;
+		border-radius: ${props => props.theRadius ? '0px' : props.theRadius}
+	}
+	.some-class {
+		background: yellow;
+	}
+`;
+
+class Page extends Component {
+	render() {
+		return (
+			<MyButton>
+				Click Me
+				<span>-></span>
+				<span className="some-class">Whatever</span>
+			</MyButton>
+		);
+	}
+}
+```
+
+One possible directory structure (not shown in this project) might be the following:
+
+components/
+	Header/
+		index.js /* The component itself */
+		styles.js /* The styled component used for header */
+		__test__.js /* The Header test case */
+
+Note that the styled component css is also gathered on the server as pages are pushed. See frontend/pages/_document.js. This prevents flicker, because without the component css is pushed async after the component. Also see: https://github.com/zeit/next.js/#custom-document.
+
 
 # Backend Overview
 
