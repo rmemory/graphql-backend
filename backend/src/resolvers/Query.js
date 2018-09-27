@@ -2,7 +2,7 @@
  * If not authentication is required, simply forward the
  * request directly to Prisma. 
  * 
- * const { forwardTo } = require('prisma-binding);
+ * const { forwardTo } = require('prisma-binding');
  * 
  * const Query = {
  * 	myQuery (parent, args, ctx, info) {

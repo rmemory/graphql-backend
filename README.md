@@ -50,6 +50,24 @@ components/
 
 Note that the styled component css is also gathered on the server as pages are pushed. See frontend/pages/_document.js. This prevents flicker, because without the component css is pushed async after the component. Also see: https://github.com/zeit/next.js/#custom-document.
 
+## Next.js
+
+https://github.com/rmemory/next.js_example
+
+## Apollo
+
+Apollo calls the Yoga GraphQL API (using mutations and queries), it caches any data it can on the client side, and it handles all of the React state (ie. redux).
+
+On the client side, generally there are these libraries:
+
+apollo-boost: Package containing everything you need to set up Apollo Client
+react-apollo: View layer integration for React
+graphql: Also parses your GraphQL queries
+
+The Apollo client is created in frontend/lib/withData.js.
+
+
+
 
 # Backend 
 
