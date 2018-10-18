@@ -1,12 +1,158 @@
-This is a boilerplate full stack starter point for React applications, which uses React, Next.js, Node, and GraphQL implementations. The frontend code is aptly placed in the frontend folder, and same for backend.
+This is a boilerplate full stack starter point for React applications, which uses React, Next.js, Node, and GraphQL implementations. The frontend code is placed in the frontend folder, and same for backend.
 
 # FrontEnd Overview
 
-The routes are defined in the frontend/pages directory. Note that server side rendering is used. Each page file defines a route, and each route decides which components are pushed to the client. 
+This stack consists of frontend and backend component, where each of those are themselves split into two parts. This readme is for the frontend.
 
-The top level React state for the application is defined in frontend/pages/_app.js. Note that next.js generates pages on demand in development mode, which means when using development mode, there is a bit of delay when switching pages. And we can also pre-fetch the data needed before its displayed as well.
+# Frontend (which actually has a server side component to it)
+
+The frontend consists of a both React and Apollo. The React part is controlled via Next.js. Apollo manages state, caching, and is the client side interface to the GraphQL database on the backend.
+
+## Next.js
+
+Next.js handles the webpack build aspects, code splitting, and also renders each component on the server, which may or may not be the same as the database.
+
+In Next.js each "server side" route is defined inside of the pages folder, using a single React component per route. These are all rendered by Next on the server. Each route in turn serves up a React component (or even multiple Components) which are rendered on the client side.
+
+### getInitialProps
+
+Next.js provides a server side method called getInitialProps(), which Next calls before it sends the Component to the client. In this app, it is used to resolve the query params in the URL and resolve the Component CSS to prevent flicker.
+
+In theory that same getInitialProps() method, could be used to get the data required for the Component from the database before the Component is sent to the client. Here is a rather simple example of what that could look like:
+
+```
+getInitialProps = async function() {
+	const result = await fetch('https://api.coindesk.com/v1/bpi/currentprice.json');
+	const data = await result.json();
+
+	return {
+		bpi: data.bpi
+	};
+}
+```
+
+The "bpi" data above becomes accessible on the client side Component via the usual props.
+
+```
+list = <li className="list-group-item">
+		Bitcoin rate for {this.props.bpi.USD.description}:
+		<span className="badge badge-primary">{this.props.bpi.USD.code}</span>
+		<strong>{this.props.bpi.USD.rate}</strong>
+	</li>
+```
+
+### Routing using pages
+
+The pages directory in the project contains the routes. They are rendered on the server (calling getInitialProps first).
+
+The concept of server side routing is useful in order that the entire application isn't loaded all at once, as is the case in a typical single page app. Additionally, Next.js provides webpack tooling behind the scenes which uses module splitting, which insures that only the modules required by a particular module are loaded for the components which use them.
+
+A simple index route is created by creating a file pages/index.js, which contains the following:
+
+```
+const Index = () => (
+  <div>
+    <p>Hello Next.js</p>
+  </div>
+)
+
+export default Index
+```
+
+### Hot module reloading
+
+Next.js has hot module reloading for development, and displays all errors in the browser. 
+
+### Client side routing
+
+Even though it supports server side routing as described above, Next.js does not preclude the usage of client side routing. In order to support client-side navigation, Next.js's Link API is used, which is exported via next/link.
+
+```
+import Link from 'next/link'
+
+const Index = () => (
+  <div>
+    <Link href="/about">
+      <a>About Page</a>
+    </Link>
+    <p>Hello Next.js</p>
+  </div>
+)
+
+export default Index
+```
+
+Usage of Link above is all that is required to implement client side routing. next/link does all the location.history handling for you.
+
+Note that styles to links must be done on the a tag, not the Link component. Stated differently, this works:
+
+```
+<Link href="/about">
+  <a style={{ fontSize: 20 }}>About Page</a>
+</Link>
+```
+
+This does not (or more accurately the style is ignored)
+
+```
+<Link href="/about" style={{ fontSize: 20 }}>
+  <a>About Page</a>
+</Link>
+```
+
+Links in Next are High Order Components:
+
+https://reactjs.org/docs/higher-order-components.html
+
+Also note that buttons can be used instead of anchor tags. Clicking on this button causes the server to serve the about link (page).
+
+```
+<Link href="/about">
+  <button>Go to About Page</button>
+</Link>
+```
+Or anything, including a div. You just need to add the onClick property. See the docs for more examples including the HOC withRouter
+
+https://github.com/zeit/next.js#routing
+
+https://github.com/zeit/next.js#using-a-higher-order-component
+
+### pages/_app.js
+
+In this application, the only component that implements the getInitialProps is _app.js, which is basically the root for all state and handling layout for all pages.
+
+https://nextjs.org/docs/#custom-app
+
+The basic __app.js might look like this:
+
+```
+import App, { Container } from 'next/app';
+import Page from "../components/Page";
+
+class MyApp extends App {
+	render() {
+		const { Component } = this.props;
+
+		return (
+			<Container>
+				<Page>
+					<Component />
+				</Page>
+			</Container>
+		)
+	}
+}
+
+export default MyApp;
+```
+
+In the example above, Page is a client side component, and Component is the Route Component being rendered. That said, we need to add more functionality to our _app.js, and thus it is a bit more complex.
+
+### Progress bar
 
 See the frontend/components/Header.js for usage of the nProgress bar, though it could be anywhere.
+
+### Styles, themes, and CSS
 
 The overall color theme for the application is defined in a theme object in frontend/components/Page.js, and a ThemeProvider is used (via React Context) to be available througout the application on any component which is a descendent of Page.
 
@@ -48,11 +194,10 @@ components/
 		styles.js /* The styled component used for header */
 		__test__.js /* The Header test case */
 
+### CSS flicker and document.js
+
 Note that the styled component css is also gathered on the server as pages are pushed. See frontend/pages/_document.js. This prevents flicker, because without the component css is pushed async after the component. Also see: https://github.com/zeit/next.js/#custom-document.
 
-## Next.js
-
-https://github.com/rmemory/next.js_example
 
 ## Apollo
 
@@ -65,8 +210,6 @@ react-apollo: View layer integration for React
 graphql: Also parses your GraphQL queries
 
 The Apollo client is created in frontend/lib/withData.js.
-
-
 
 
 # Backend 
@@ -172,7 +315,7 @@ $ prisma login
 ```
 
 That will open the browser to allow you to grant permission for Prisma to run on your machine. Grant access as directed in the browser and return back to the terminal opened previously. 
-
+ge
 To create a new database, or interface with an existing MySql or MongoDB database run this:
 
 ```

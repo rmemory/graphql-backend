@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 
-const NavStyles = styled.ul`
+const NavStylesUl = styled.ul`
 	margin: 0;
 	padding: 0;
-	display: flex; // Layout horizontal
-	justify-self: end;
+	display: flex; /* Layout horizontal, otherwise they are vertical */
+	justify-self: end; /* Push everything to the right edge of the grid column */
 	font-size: 2rem;
+
+	/* buttons and links on the nav bar are handled the same */
 	a,
 	button {
 		padding: 1rem 3rem;
 		display: flex;
 		align-items: center;
+
 		position: relative;
 		text-transform: uppercase;
 		font-weight: 900;
@@ -24,7 +27,7 @@ const NavStyles = styled.ul`
 			padding: 0 10px;
 		}
 
-		// Slant separator before each item
+		/* Slant separator before each item */
 		&:before { 
 			content: '';
 			width: 2px;
@@ -37,11 +40,11 @@ const NavStyles = styled.ul`
 			bottom: 0;
 		}
 
-		// Hover bar under item
+		/* Hover bar under item */
 		&:after { 
 			content: '';
 			height: 2px;
-			background: red; // Might want to theme this
+			background: ${props => props.theme.red}; 
 			width: 0;
 			position: absolute;
 			transform: translateX(-50%);
@@ -50,6 +53,7 @@ const NavStyles = styled.ul`
 			left: 50%;
 			margin-top: 2rem;
 		}
+		/* Width calculation is required for hover bar as well */
 		&:hover,
 		&:focus {
 			outline: none;
@@ -58,6 +62,7 @@ const NavStyles = styled.ul`
 			}
 		}
 	}
+
 	@media (max-width: 1300px) {
 		border-top: 1px solid ${props => props.theme.lightgrey};
 		width: 100%;
@@ -66,4 +71,4 @@ const NavStyles = styled.ul`
 	}
 `;
 
-export default NavStyles;
+export default NavStylesUl;

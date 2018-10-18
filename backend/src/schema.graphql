@@ -24,7 +24,7 @@ type Query {
 	items: [Item]!
 }
 
-# Here is any example: 
+# Here is an example which can be used in the playground: 
 
 	# mutation createADog{
 	# 	createDog(name: "Anna"){

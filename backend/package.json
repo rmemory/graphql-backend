@@ -5,7 +5,7 @@
     "start": "nodemon -e js,graphql -x node src/index.js",
     "debug": "nodemon -e js,graphql -x node --inspect src/index.js",
     "test": "jest",
-    "playground": "graphql playground --dotenv variables.env",
+    "playground": "graphql playground --port 4444 --dotenv variables.env",
     "deploy": "prisma deploy --env-file variables.env",
     "dev": "npm-run-all --parallel debug playground"
   },
@@ -19,19 +19,16 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-react": "^7.11.1",
     "graphql": "^0.13.2",
+    "graphql-cli": "^2.16.7",
     "graphql-yoga": "1.16.2",
     "jsonwebtoken": "8.3.0",
-    "nodemailer": "^4.6.6",
+    "nodemailer": "^4.6.8",
     "nodemon": "1.18.4",
     "npm-run-all": "^4.1.3",
     "prettier-eslint": "^8.8.2",
-    "prisma": "1.16.2",
-    "prisma-binding": "2.1.5",
-    "stripe": "^6.1.1"
-  },
-  "devDependencies": {
-    "graphql-cli": "^2.16.2",
-    "jest-cli": "^23.1.0"
+    "prisma": "1.17.1",
+    "prisma-binding": "2.1.6",
+    "stripe": "^6.12.1"
   },
   "license": "MIT",
   "repository": {

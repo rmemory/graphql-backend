@@ -2,7 +2,7 @@
 import Document, { Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
-/* The entire purpose of this file is to prevent css
+/* The entire purpose of this file in this app is to prevent css
    flicker when refreshing the client. Without this file
    all styled components are downloaded async after the
    pages, which causes a brief moment when the user sees
@@ -40,7 +40,8 @@ export default class MyDocument extends Document {
 			<html>
 				<Head>
 					{/* <title>My page</title> */}
-					{this.props.styleTags}
+					{/* Injects all styles into HEAD */}
+					{this.props.styleTags} 
 				</Head>
 				<body>
 					<Main />

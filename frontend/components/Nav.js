@@ -1,11 +1,8 @@
-/* By using Link instead of a regular anchor link, it means
- * the link is bound to HTML5 push state */
-
 import Link from 'next/link';
-import NavStyles from './styles/NavStyles';
+import NavStylesUl from './styles/NavStyles';
 
 const Nav = () => (
-	<NavStyles>
+	<NavStylesUl>
 		<Link href="/items">
 			<a>Items</a>
 		</Link>
@@ -21,7 +18,7 @@ const Nav = () => (
 		<Link href="/me">
 			<a>Account</a>
 		</Link>
-	</NavStyles>
+	</NavStylesUl>
 )
 
 export default Nav;
