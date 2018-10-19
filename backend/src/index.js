@@ -11,6 +11,7 @@ const server = createServer();
 // TODO use express middleware to populate current user
 
 server.start({
+	// Only our frontend Next server can access GraphQL
 	cors: {
 		credentials: true,
 		origin: process.env.FRONTEND_URL,

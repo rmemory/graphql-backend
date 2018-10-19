@@ -1,7 +1,8 @@
-// This file connects to the prisma DB and gives us
+// This file connects to the remote prisma DB and gives us
 // access to the DB and ability to query the DB with
 // JS
 
+// prisma-binding is the interface between JS and GraphQL
 const { Prisma } = require('prisma-binding');
 
 // Created by the npm run deploy step

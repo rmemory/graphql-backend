@@ -1,48 +1,9 @@
 # import * from './generated/prisma.graphql'
 
-type Dog {
-	name: String!
-}
-
-input YogaItemCreateInput {
-  title: String!
-  description: String!
-  image: String
-  largeImage: String
-  price: Int!
-}
-
 type Mutation {
-	createDog(name: String!): Dog
-
-	# Connection to Prisma.
-	createItem(data: YogaItemCreateInput!): Item!
+	createItem(title: String!, description: String!, price: Int!, image: String, largeImage: String): Item!
 }
 
 type Query {
-	dogs: [Dog]!
 	items: [Item]!
 }
-
-# Here is an example which can be used in the playground: 
-
-	# mutation createADog{
-	# 	createDog(name: "Anna"){
-	# 	name
-	# }
-	# createItem(data: {
-	# 	title: "goober",
-	# 	description: "A description",
-	# 	image: "a string",
-	# 	largeImage: "goober.jpg",
-	# 	price: 5500,
-	# }) {
-	# 	description
-	# }
-
-	# query getAllItems{
-	# 	items {
-	# 		description
-	# 		image
-	# 	}
-	# }

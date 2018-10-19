@@ -19,12 +19,15 @@ function createServer() {
 			Mutation: Mutation,
 			Query: Query,
 		},
+
+		// Turn off weird warnings
 		resolverValidationOptions: {
 			requireResolversForResolveType: false,
 		},
 
-		// cookies, other request information from the request
-		// will be made available to each resolver
+		// This makes the db available to each resolver
+		// This comes in through the ctx argument to each
+		// resolver function
 		context: req => ({ ...req, db }),
 	});
 }
