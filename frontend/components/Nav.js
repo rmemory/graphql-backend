@@ -4,7 +4,7 @@ import NavStylesUl from './styles/NavStyles';
 const Nav = () => (
 	<NavStylesUl>
 		<Link href="/items">
-			<a>Items</a>
+			<a>Shop</a>
 		</Link>
 		<Link href="/sell">
 			<a>Sell</a>

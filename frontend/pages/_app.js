@@ -1,6 +1,7 @@
 import App, { Container } from 'next/app';
 import Page from '../components/Page';
 
+/* both of the following are required to get Apollo working with Next */
 import { ApolloProvider } from 'react-apollo';
 import withData from '../lib/withData';
 
@@ -26,7 +27,7 @@ class MyApp extends App {
 			pageProps = await Component.getInitialProps(ctx);
 		}
 
-		// This line exposes the query to the user
+		// This line exposes the query part of the URL to the user
 		pageProps.query = ctx.query;
 		return { pageProps };
 	}
@@ -37,7 +38,9 @@ class MyApp extends App {
 		return (
 			<Container>
 				{/* ApolloProvider exposes the apollo 
-					client to the app */}
+					client to the app, and "apollo" here 
+					comes from the Apollo Client which is 
+					defined in the withData HOC */}
 				<ApolloProvider client={apollo}>
 					<Page>
 						{/* The Component here is the route or page being rendered,
@@ -53,4 +56,5 @@ class MyApp extends App {
 	}
 }
 
+// wrap MyApp in the ApolloClient (ApolloProvider requires it)
 export default withData(MyApp);
