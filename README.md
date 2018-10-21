@@ -207,6 +207,20 @@ graphql: Also parses your GraphQL queries
 
 The Apollo client is created and configured in frontend/lib/withData.js, and this wraps the frontend/pages/_app.js, which nests everything inside of the ApolloProvider. Kinda magic.
 
+## Cloudinary
+
+https://cloudinary.com/console/settings/upload
+
+Create a preset
+
+Click on "Add upload preset"
+
+Signing mode: Unsigned
+Folder: <insert name>
+Click on Upload Manipulations:
+Edit Incoming Transformation. Set width to 500, height to blank (c_scale,q_auto,w_500)
+Edit Eager Transformation (c_scale,q_auto,w_1000)
+Save
 
 # Backend 
 
