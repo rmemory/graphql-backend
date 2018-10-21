@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import Router from 'next/router';
 import PropTypes from 'prop-types';
 
 import DisplayError from './ErrorMessage';
@@ -140,7 +139,7 @@ class UpdateItem extends Component {
 }
 
 UpdateItem.propTypes = {
-	queryId: PropTypes.number.isRequired,
+	queryId: PropTypes.string.isRequired,
 };
 
 export default UpdateItem;
