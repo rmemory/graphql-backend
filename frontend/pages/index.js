@@ -1,7 +1,7 @@
 import Items from '../components/Items';
 
 const Index = props => (
-	<Items />
+	<Items pageNumberQuery = {parseFloat(props.query.page) || 1}/>
 );
 
 export default Index;
