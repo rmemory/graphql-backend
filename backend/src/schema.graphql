@@ -4,6 +4,7 @@ type SuccessMessage {
 	message: String
 }
 
+# Only allow this subset of user on public facing API
 type User {
 	id: ID!
 	name: String!
@@ -20,7 +21,7 @@ type Mutation {
 	signout: SuccessMessage
 	requestReset(email: String!): SuccessMessage
 	resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
-
+	updatePermissions(permissions: [Permission], userId: ID!): User
 }
 
 type Query {
@@ -28,4 +29,5 @@ type Query {
 	items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, first: Int): [Item]!
 	itemsConnection(where: ItemWhereInput): ItemConnection!
 	me: User
+	users: [User]!
 }

@@ -30,7 +30,25 @@ server.express.use((req, res, next) => {
 		// put the userId onto the req for requests in the "next" chain to access
 		req.userId = userId;
 	}
-	next();
+	return next();
+});
+
+// Use express middleware to populate current user, thus both the userId
+// and user information will be available on the request
+server.express.use(async (req, res, next) => {
+	// if they aren't logged in, skip this
+	if (!req.userId) 
+		return next();
+
+	const user = await db.query.user(
+		{ where: { id: req.userId } },
+		// Return values are these ....
+		'{ id, permissions, email, name }'
+	);
+
+	// This guy is used in the users query
+	req.user = user;
+	return next();
 });
 
 server.start({

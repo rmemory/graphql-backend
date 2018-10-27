@@ -43,8 +43,8 @@ class DeleteItem extends Component {
 
 	delete = async (event, deleteItemFunction) => {
 		if (confirm('Are you sure you want to delete this?')) {
-			const id = await deleteItemFunction();
-			console.log(id);
+			const id = await deleteItemFunction().catch(err => 
+				alert(err.message));
 		}
 	}
 
